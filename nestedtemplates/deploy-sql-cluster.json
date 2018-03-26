@@ -120,7 +120,7 @@
         },
         "imageSKU": {
             "type": "string",
-            "defaultValue": "Developer"
+            "defaultValue": "SQLDEV"
         },
         "imageVersion": {
             "type": "string",
