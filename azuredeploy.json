@@ -6,9 +6,10 @@
       "type": "string",
       "allowedValues": [
         "westeurope",
+        "centralus",
         "eastus2"
       ],
-      "defaultValue": "westeurope",
+      "defaultValue": "centralus",
       "metadata": {
         "description": "Location for the VMs, only certain regions support zones during preview."
       }
