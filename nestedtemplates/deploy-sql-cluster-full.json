@@ -6,6 +6,7 @@
             "type": "string",
             "allowedValues": [
                 "westeurope",
+                "centralus",
                 "eastus2"
             ],
             "metadata": {
@@ -119,7 +120,7 @@
         },
         "imageSKU": {
             "type": "string",
-            "defaultValue": "Enterprise"
+            "defaultValue": "Developer"
         },
         "imageVersion": {
             "type": "string",
