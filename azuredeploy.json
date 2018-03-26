@@ -21,7 +21,7 @@
       "metadata": {
         "description": "Naming prefix for each new resource created. 3-char min, 8-char max, lowercase alphanumeric"
       },
-      "defaultValue": 2
+      "defaultValue": "sqlagaz"
     },
     "vmSize": {
       "type": "string",
@@ -50,7 +50,7 @@
       "metadata": {
         "description": "Number of SQL Server VMs to be created in AlwaysOn Availability Group cluster (Min=2, Max=9)"
       },
-      "defaultValue": 2
+      "defaultValue": 3
     },
     "vmDiskSize": {
       "type": "int",
