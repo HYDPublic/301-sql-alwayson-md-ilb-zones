@@ -30,14 +30,16 @@ A short alphanumeric text to be added to the front of any resources deployed.  T
 3-8 alphanumeric characters.
 
 ### VM Size
-The name of the type of VM to be deployed to host the SQL AG cluster nodes.
+The name of the type of VM to be deployed to host the SQL VM AG cluster nodes.
 
 This value must match an exact SQL Azure VM size.  The Azure VM size names can be found here - https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes-general
 
 Only VM that allows Premium disk are supported in this solution (ie Ensure the VM is marked with an "S" - "Standard_DS3_v2" and *NOT* "Standard_D3_v2")
 
 ### SQL VM Image
-Select from the dropdown box for the SQL deployment image that you want to deploy.
+The SQL deployment image that you want to deploy onto each of the SQL VM.
+
+Value must be one of the options in the dropdown list.
 
 SQL AlwaysOn Availability Groups is supported in the major SQL Editions (Enterprise and Developer).  Standard Edition has some limitations and will only deploy Basic Availability Groups, and is not a supported deployment within this template.
 
@@ -50,11 +52,11 @@ See here for SQL 2017 - https://docs.microsoft.com/en-us/sql/sql-server/editions
 ### VM Count
 The number of Azure VM to deploy.  
 
-Each of these VM will host a SQL deployment and will act as a node in the SQL AlwaysOn cluster.
+Each of these VM will host a SQL deployment matching the configuration above and will act as a node in the SQL AlwaysOn cluster.  Each of the deployed VM will be allocated across different Azure AZ (ie a value of 3 will place a single SQL VM in each of the Azure AZ of 1, 2 and 3).  
 
 Must be a numeric value between 2-9.
 
-SQL AlwaysOn supports up to 8 additional replicas (hence the limit of 9 Azure VM)
+SQL AlwaysOn supports up to 8 additional replicas (hence the limit of 9 Azure VM).  A value of 9 will place 3 SQL AG replicas into each of the 3x Azure AZ.
 
 ### VM Disk Size
 The size of the SQL data disks to attach to each of the deployed VM.
@@ -67,7 +69,6 @@ Each disk attached is a Premium Azure Managed Disk.
 
 ### VM Disk Count
 The number of SQL data disks to attach to each of the deployed VM.  
-
 Must be a numeric value of 2-32.  
 
 A single Windows Storage Space will be created to span all the attached disks into a single allocated space.
@@ -111,17 +112,40 @@ This *must* be an existing AD Resource Group.  This template does not create the
 ### Existing Azure VNet Name
 The name of an existing Azure VNet (that contains an existing Azure Subnet (see below)) into which the SQL VM will be deployed.
 
-This VNet must exist in the same region as the target location of this script deployment.
+This VNet must exist in the same region that supports AZ as the target location of this script deployment.  Azure VNets/Subnets cannot span Azure regions, however they can span AZ within a single region.
+
+It is recommended to allow at least 32 IP addresses in the range.  Each deployed Azure VM will have at least one IP private address.
 
 This *must* be an existing Azure VNet.  This template does not create the Azure VNet.
 
 ### Existing Azure VNet Subnet Name
+The name of an existing Azure Subnet in the existing VNet into which the SQL VM will be deployed.
+
+This Subnet must exist in VNet used as part of this deployment.  Azure VNets/Subnets cannot span Azure regions, however they can span AZ within a single region.
+
+It is recommended to allow at least 32 IP addresses in the range.  Each deployed Azure VM will have at least one IP private address.
+
+This *must* be an existing Azure VNet.  This template does not create the Azure VNet.
+
 ### Enable Outbound Internet on SQL VM
+Toggle whether to allow outbound internet access on the deployed SQL VM.
+
+If YES then the deployed SQL VM will be allocated a Public IP address.
+
+Value must be YES/NO.  By default this is set to NO.
+
 ### SQL Workload Type
-### ARM Template Artefacts
+A value that represents the type of workload to be performed by the Azure VM.
+
+Value must be one of the options in the dropdown list.
+
+### ARM Template Artefacts Location and SAS Token
+Location of resources that the script is dependent on such as linked templates and DSC modules.  The sasToken required to access _artifactsLocation.  When the template is deployed using the accompanying scripts, a sasToken will be automatically generated.
+
+By default this template is setup to pull the required artefacts from github during deployment, and auto-generate the reuqired SAS tokens.
 
 
-## Deploying ARM Templates
+## How to Deploy ARM Templates into Azure
 
 You can deploy these samples directly through the Azure Portal or by using the scripts supplied in the root of the repo.
 
