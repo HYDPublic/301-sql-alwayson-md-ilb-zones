@@ -13,6 +13,22 @@ For information on Azure AZ, including services and regions that support AZ, see
 ## ARM Template Parameters & Requirements & Assumptions
 ### General
 Ensure you have full rights to deploy into a resource group in your Azure Subscription
+### Location
+### Name Prefix
+### VM Size
+### SQL VM Image
+### VM Count
+### VM Disk Size
+### VM Disk Count
+### Existing AD Domain Name
+### Existing AD Domain Admin Username & Password
+### Existing SQL Server Service Account AD Username & Password
+### Existing Azure VNet Resource Group Name
+### Existing Azure VNet Name
+### Existing Azure VNet Subnet Name
+### Enable Outbound Internet on SQL VM
+### SQL Workload Type
+### ARM Template Artefacts
 
 
 ## Deploying ARM Templates
