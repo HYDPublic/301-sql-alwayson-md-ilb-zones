@@ -69,6 +69,7 @@ Each disk attached is a Premium Azure Managed Disk.
 
 ### VM Disk Count
 The number of SQL data disks to attach to each of the deployed VM.  
+
 Must be a numeric value of 2-32.  
 
 A single Windows Storage Space will be created to span all the attached disks into a single allocated space.
@@ -87,6 +88,8 @@ The name of an existing AD Domain into which the SQL VM nodes will be deployed a
 The domain name format must be fully qualified (ie "contoso.com" and not "contoso")
 
 This *must* be an existing Active Directory domain.  This template does not create AD servers nor create a domain.
+
+If you dont have a domain and wish to create one quickly for demonstration purposes, then there are ARM Templates available to deploy Azure VM with Windows for AD Domain Controllers.  See here - https://azure.microsoft.com/en-us/resources/templates/active-directory-new-domain/ and here - https://github.com/Azure/azure-quickstart-templates/tree/master/active-directory-new-domain
 
 ### Existing AD Domain Admin Username & Password
 The name/password of an existing account within the existing AD Domain that is a Domain Admin of that domain.
