@@ -25,9 +25,7 @@ To deploy using the command line (using [Azure PowerShell or the Azure CLI](http
 azure-group-deploy.sh -a [foldername] -l eastus2 -u
 ```
 
-If the sample has artifacts that need to be "staged" for deployment (Configuration Scripts, Nested Templates, DSC Packages) then set the upload switch on the command.
-
-You can optionally specify a storage account to use, if so the storage account must already exist within the subscription.  If you don't want to specify a storage account one will be created by the script or reused if it already exists (think of this as "temp" storage for AzureRM).
+This ARM template has artifacts that need to be "staged" for deployment (Configuration Scripts, Nested Templates, DSC Packages) so ensure to set the "UploadArtifacts" switch on the command.  You can optionally specify a storage account to use for hosting the ARM template artefacts, and if so the storage account must already exist within the target subscription.  If you don't want to specify a storage account one will be created by the script or reused if it already exists.
 
 ```PowerShell
 .\Deploy-AzureResourceGroup.ps1 -ResourceGroupLocation 'eastus2' -ArtifactsStagingDirectory '301-sql-alwayson-md-ilb-zones' -UploadArtifacts 
