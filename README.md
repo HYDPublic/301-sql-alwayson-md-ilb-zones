@@ -14,16 +14,24 @@ For information on Azure AZ, including services and regions that support AZ, see
 ## ARM Template Parameters & Requirements & Assumptions
 ### General
 Ensure you have full rights to deploy into a resource group in your Azure Subscription
+
 ### Location
 The name of the Azure region that you want to deploy this solution.  The target region MUST have AZ capabilities enabled, and your subscription must allow for the deployment of services into Azure AZ in that region (ie for AZ Preview you must be signed up and enabled in your subscription)
+
 Ensure to use the Azure region short names "centralus", "westeurope", "eastus2" etc
+
 ### Name Prefix
 A short alphanumeric text to be added to the front of any resources deployed.  This ensures that for any services that are deployed into an existing Azure Resource Group that the name is unique, is eaisly identifiable and can also be eaisly deleted if required.
+
 3-8 alphanumeric characters.
+
 ### VM Size
 The name of the type of VM to be deployed to host the SQL AG cluster nodes.
+
 The Azure VM size names can be found here - https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes-general
+
 Only VM that allows Premium disk must be used.
+
 ### SQL VM Image
 ### VM Count
 ### VM Disk Size
