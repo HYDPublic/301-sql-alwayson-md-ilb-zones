@@ -38,23 +38,43 @@ Only VM that allows Premium disk are supported in this solution (ie Ensure the V
 ### SQL VM Image
 Select from the dropdown box for the SQL deployment image that you want to deploy.
 
-This ARM template will deploy SQL Developer Edition (SQLDEV).
+SQL AlwaysOn Availability Groups is supported in the major SQL Editions (Enterprise and Developer).  Standard Edition has some limitations and will only deploy Basic Availability Groups, and is not a supported deployment within this template.
 
-SQL AlwaysOn Availability Groups is supported in the major SQL Editions (Enterprise and Developer).  Standard Edition has some limitations and will only deploy Basic Availability Groups.  
+This ARM template will deploy SQL Developer Edition (SQLDEV).  If you want to deploy SQL Enterprise Edition, then update the "imageSKU" value in both the "nestedtemplates/deploy-sql-cluster.json" and "nestedtemplates/deploy-sql-cluster-full.json" files to "Enterprise".
 
 See here for SQL 2016 - https://docs.microsoft.com/en-us/sql/sql-server/editions-and-components-of-sql-server-2016#RDBMSHA
 
 See here for SQL 2017 - https://docs.microsoft.com/en-us/sql/sql-server/editions-and-components-of-sql-server-2017#RDBMSHA
 
 ### VM Count
-The number of Azure VM to deploy.  Each of these VM will host a SQL deployment and will act as a node in the SQL AlwaysOn cluster.
+The number of Azure VM to deploy.  
+
+Each of these VM will host a SQL deployment and will act as a node in the SQL AlwaysOn cluster.
 
 Must be a numeric value between 2-9.
 
-SQL AlwaysOn supports up to 8 additional replicas, hence the limit of up to 9 Azure VM.
+SQL AlwaysOn supports up to 8 additional replicas (hence the limit of 9 Azure VM)
 
 ### VM Disk Size
+The size of the data disks to attach to each of the deployed VM.
+
+Must be a numeric value of 128-1023.
+
+Each disk attached is a Premium Azure Managed Disk.
+
 ### VM Disk Count
+The number of data disks to attach to each of the deployed VM.  
+
+Must be a numeric value of 2-32.  
+
+Ensure that the "VM Size" type above that is being deployed supports the number of disks.
+
+One disk will be dedicated to the the Windows OS.  
+
+This value *does not* include the D:\ Azure temporary drive which is always attached to the VM by default
+
+Each disk attached is a Premium Azure Managed Disk.
+
 ### Existing AD Domain Name
 ### Existing AD Domain Admin Username & Password
 ### Existing SQL Server Service Account AD Username & Password
