@@ -5,7 +5,12 @@ This Azure ARM template will create a SQL Server AlwaysOn Availability Group usi
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Frolftesmer%2F301-sql-alwayson-md-ilb-zones%2Fmaster%2Fazuredeploy.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-## Deploying Sample Templates
+
+## ARM Template Parameters
+
+
+
+## Deploying ARM Templates
 
 You can deploy these samples directly through the Azure Portal or by using the scripts supplied in the root of the repo.
 
@@ -19,6 +24,7 @@ To deploy using the command line (using [Azure PowerShell or the Azure CLI](http
 ```bash
 azure-group-deploy.sh -a [foldername] -l eastus2 -u
 ```
+
 If the sample has artifacts that need to be "staged" for deployment (Configuration Scripts, Nested Templates, DSC Packages) then set the upload switch on the command.
 
 You can optionally specify a storage account to use, if so the storage account must already exist within the subscription.  If you don't want to specify a storage account one will be created by the script or reused if it already exists (think of this as "temp" storage for AzureRM).
