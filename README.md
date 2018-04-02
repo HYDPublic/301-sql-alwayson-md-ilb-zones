@@ -1,4 +1,5 @@
 
+
 # Create a SQL Server AlwaysOn Availability Group (SQL AG) solution in an existing Azure VNET and existing Active Directory (AD) domain across Azure Availability Zones (AZ) using an Azure Internal Load Balancer (ILB)
 
 This Azure ARM template will create a SQL Server AlwaysOn Availability Group using the PowerShell DSC Extension in an existing Azure Virtual Network (VNet) and existing Active Directory (AD) environment. Both SQL Server 2016 and  2017 are supported by this ARM template. The SQL Server VMs will be provisioned across multiple Azure Availability Zones (AZ) and requests will be directed to the SQL AG Listener via the zone redundant Internal Load Balancer (ILB) Standard.
@@ -6,6 +7,8 @@ This Azure ARM template will create a SQL Server AlwaysOn Availability Group usi
 This ARM template has several requirements and assumptions in regards to the target deployment environment that must be in place *before* deploying this solution.  Please see below.
 
 For information on Azure AZ, including services and regions that support AZ, see this link - https://docs.microsoft.com/en-us/azure/availability-zones/az-overview
+
+For information on SQL AlwaysOn Availability Groups see this link - https://docs.microsoft.com/en-us/sql/database-engine/availability-groups/windows/always-on-availability-groups-sql-server
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Frolftesmer%2F301-sql-alwayson-md-ilb-zones%2Fmaster%2Fazuredeploy.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
@@ -28,12 +31,28 @@ A short alphanumeric text to be added to the front of any resources deployed.  T
 ### VM Size
 The name of the type of VM to be deployed to host the SQL AG cluster nodes.
 
-The Azure VM size names can be found here - https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes-general
+This value must match an exact SQL Azure VM size.  The Azure VM size names can be found here - https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes-general
 
-Only VM that allows Premium disk must be used.
+Only VM that allows Premium disk are supported in this solution (ie Ensure the VM is marked with an "S" - "Standard_DS3_v2" and *NOT* "Standard_D3_v2")
 
 ### SQL VM Image
+Select from the dropdown box for the SQL deployment image that you want to deploy.
+
+This ARM template will deploy SQL Developer Edition (SQLDEV).
+
+SQL AlwaysOn Availability Groups is supported in the major SQL Editions (Enterprise and Developer).  Standard Edition has some limitations and will only deploy Basic Availability Groups.  
+
+See here for SQL 2016 - https://docs.microsoft.com/en-us/sql/sql-server/editions-and-components-of-sql-server-2016#RDBMSHA
+
+See here for SQL 2017 - https://docs.microsoft.com/en-us/sql/sql-server/editions-and-components-of-sql-server-2017#RDBMSHA
+
 ### VM Count
+The number of Azure VM to deploy.  Each of these VM will host a SQL deployment and will act as a node in the SQL AlwaysOn cluster.
+
+Must be a numeric value between 2-9.
+
+SQL AlwaysOn supports up to 8 additional replicas, hence the limit of up to 9 Azure VM.
+
 ### VM Disk Size
 ### VM Disk Count
 ### Existing AD Domain Name
