@@ -13,10 +13,11 @@ For information on SQL AlwaysOn Availability Groups see this link - https://docs
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Frolftesmer%2F301-sql-alwayson-md-ilb-zones%2Fmaster%2Fazuredeploy.json" target="_blank"><img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
+### NOTE
+The script is intended for demonstration purposes and is not considered "Production Ready".  For simplicity a number of best practice configurations have not been implemented in this solution and should be considered when deploying this template.
+
 
 ## ARM Template Parameters & Requirements & Assumptions
-### General
-Ensure you have full rights to deploy into a resource group in your Azure Subscription
 
 ### Location
 The name of the Azure region that you want to deploy this solution.  The target region MUST have AZ capabilities enabled, and your subscription must allow for the deployment of services into Azure AZ in that region (ie for AZ Preview you must be signed up and enabled in your subscription)
@@ -56,30 +57,64 @@ Must be a numeric value between 2-9.
 SQL AlwaysOn supports up to 8 additional replicas (hence the limit of 9 Azure VM)
 
 ### VM Disk Size
-The size of the data disks to attach to each of the deployed VM.
+The size of the SQL data disks to attach to each of the deployed VM.
 
 Must be a numeric value of 128-1023.
+
+This is only related to the SQL data disks and does not impact the Windows OS drive
 
 Each disk attached is a Premium Azure Managed Disk.
 
 ### VM Disk Count
-The number of data disks to attach to each of the deployed VM.  
+The number of SQL data disks to attach to each of the deployed VM.  
 
 Must be a numeric value of 2-32.  
 
+A single Windows Storage Space will be created to span all the attached disks into a single allocated space.
+
 Ensure that the "VM Size" type above that is being deployed supports the number of disks.
 
-One disk will be dedicated to the the Windows OS.  
+This *does not* include the Windows OS disk, which is allocated and attached seperately by default.  
 
 This value *does not* include the D:\ Azure temporary drive which is always attached to the VM by default
 
 Each disk attached is a Premium Azure Managed Disk.
 
 ### Existing AD Domain Name
+The name of an existing AD Domain into which the SQL VM nodes will be deployed and joined.
+
+The domain name format must be fully qualified (ie "contoso.com" and not "contoso")
+
+This *must* be an existing Active Directory domain.  This template does not create AD servers nor create a domain.
+
 ### Existing AD Domain Admin Username & Password
+The name/password of an existing account within the existing AD Domain that is a Domain Admin of that domain.
+
+This *must* be an existing AD Account.  This template does not create the AD Account.
+
+This domain account will be used to join the new SQL VM and setup the cluster names into the domain.
+
 ### Existing SQL Server Service Account AD Username & Password
+The name/password of an existing account within the existing AD Domain that will be used to run the SQL Server Database Engine services on each of the deployed SQL VM.
+
+This account must be different that the one used as the existing AD Domain Admin account.
+
+This *must* be an existing AD Account.  This template does not create the AD Account.
+
 ### Existing Azure VNet Resource Group Name
+The name of an existing Azure Resource Group (that contains an existing Azure VNet and Subnet (see below)) into which the SQL VM will be deployed.
+
+It is recommended that the Resource Group exist in the same region as the hosted Azure services/resources will be deployed.
+
+This *must* be an existing AD Resource Group.  This template does not create the Azure Resource Group.
+
 ### Existing Azure VNet Name
+The name of an existing Azure VNet (that contains an existing Azure Subnet (see below)) into which the SQL VM will be deployed.
+
+This VNet must exist in the same region as the target location of this script deployment.
+
+This *must* be an existing Azure VNet.  This template does not create the Azure VNet.
+
 ### Existing Azure VNet Subnet Name
 ### Enable Outbound Internet on SQL VM
 ### SQL Workload Type
