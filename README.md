@@ -82,7 +82,7 @@ This value *does not* include the D:\ Azure temporary drive which is always atta
 Each disk attached is a Premium Azure Managed Disk.
 
 ### Existing AD Domain Name
-The name of an existing AD Domain into which the SQL VM nodes will be deployed and joined.
+The name of an existing AD Domain into which the SQL VM nodes will be deployed and joined.  The SQL AG cluster name ("-sql-c") and SQL AG listener name ("-sql-ag") will also be created into this AD Domain.
 
 The domain name format must be fully qualified (ie "contoso.com" and not "contoso")
 
@@ -103,29 +103,29 @@ This account must be different that the one used as the existing AD Domain Admin
 This *must* be an existing AD Account.  This template does not create the AD Account.
 
 ### Existing Azure VNet Resource Group Name
-The name of an existing Azure Resource Group (that contains an existing Azure VNet and Subnet (see below)) into which the SQL VM will be deployed.
+The name of an existing Azure Resource Group (that contains an existing Azure VNet and Subnet (see below)) into which the SQL VM and Azure ILB will be deployed.
 
 It is recommended that the Resource Group exist in the same region as the hosted Azure services/resources will be deployed.
 
 This *must* be an existing AD Resource Group.  This template does not create the Azure Resource Group.
 
 ### Existing Azure VNet Name
-The name of an existing Azure VNet (that contains an existing Azure Subnet (see below)) into which the SQL VM will be deployed.
+The name of an existing Azure VNet (that contains an existing Azure Subnet (see below)) into which the SQL VM and Azure ILB will be deployed.
 
 This VNet must exist in the same region that supports AZ as the target location of this script deployment.  Azure VNets/Subnets cannot span Azure regions, however they can span AZ within a single region.
 
-It is recommended to allow at least 32 IP addresses in the range.  Each deployed Azure VM will have at least one IP private address.
+It is recommended to allow at least 32 IP addresses in the range.  Each deployed Azure VM will have at least one IP private address.  The deployed Azure ILB will host the SQL AG listener name and IP address.
 
 This *must* be an existing Azure VNet.  This template does not create the Azure VNet.
 
 ### Existing Azure VNet Subnet Name
-The name of an existing Azure Subnet in the existing VNet into which the SQL VM will be deployed.
+The name of an existing Azure Subnet in the existing VNet into which the SQL VM and Azure ILB will be deployed.
 
-This Subnet must exist in VNet used as part of this deployment.  Azure VNets/Subnets cannot span Azure regions, however they can span AZ within a single region.
+This Subnet must exist in the VNet used as part of this deployment.  Azure VNets/Subnets cannot span Azure regions, however they can span AZ within a single region.
 
-It is recommended to allow at least 32 IP addresses in the range.  Each deployed Azure VM will have at least one IP private address.
+Each deployed Azure VM will have at least one IP private address.  The deployed Azure ILB will host the SQL AG listener name and IP address.
 
-This *must* be an existing Azure VNet.  This template does not create the Azure VNet.
+This *must* be an existing Azure Subnet.  This template does not create the Azure Subnet.
 
 ### Enable Outbound Internet on SQL VM
 Toggle whether to allow outbound internet access on the deployed SQL VM.
